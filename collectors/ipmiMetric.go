@@ -76,10 +76,10 @@ func (m *IpmiCollector) Init(config json.RawMessage) error {
 	// Check ipmitool: test with "-V" to verify its existence.
 	p, err := exec.LookPath(m.config.IpmitoolPath)
 	if err == nil {
-		command := exec.Command(p, "-V")
+		command := exec.Command(p)
 		err := command.Run()
 		if err != nil {
-			cclog.ComponentError(m.name, fmt.Sprintf("Failed to execute %s -V: %v", p, err.Error()))
+			cclog.ComponentError(m.name, fmt.Sprintf("ipmitool not usable: %v", p, err.Error()))
 			m.ipmitool = ""
 		} else {
 			m.ipmitool = p
